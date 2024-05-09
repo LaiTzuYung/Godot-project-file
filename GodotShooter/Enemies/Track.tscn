@@ -1,0 +1,102 @@
+[gd_scene load_steps=15 format=3 uid="uid://bg616h062n1vu"]
+
+[ext_resource type="Script" path="res://Enemies/Track.gd" id="1_0hv33"]
+[ext_resource type="Texture2D" uid="uid://cv02np31dw24m" path="res://Enemies/Track.png" id="2_qsayn"]
+[ext_resource type="PackedScene" uid="uid://cjvtme06b231c" path="res://Hurt and HitBoxes/HurtBox.tscn" id="3_ncr07"]
+[ext_resource type="PackedScene" uid="uid://bwxxobimbobp6" path="res://Enemies/PlayerDetectionZone.tscn" id="4_nnvn5"]
+[ext_resource type="PackedScene" uid="uid://dyrguhw8esoiu" path="res://Hurt and HitBoxes/HitBox.tscn" id="5_0cflx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7qij"]
+atlas = ExtResource("2_qsayn")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlowh"]
+atlas = ExtResource("2_qsayn")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmhuo"]
+atlas = ExtResource("2_qsayn")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy40y"]
+atlas = ExtResource("2_qsayn")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evnj5"]
+atlas = ExtResource("2_qsayn")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a2bfy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7qij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlowh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmhuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy40y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evnj5")
+}],
+"loop": true,
+"name": &"Fly",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4erq4"]
+radius = 4.4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0mxp6"]
+radius = 392.85
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t33c6"]
+radius = 7.33333
+
+[node name="Track" type="CharacterBody2D" groups=["tracks"]]
+top_level = true
+position = Vector2(0, -11)
+scale = Vector2(2.3, 2.3)
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_0hv33")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 11)
+sprite_frames = SubResource("SpriteFrames_a2bfy")
+animation = &"Fly"
+frame_progress = 0.884197
+offset = Vector2(0, -12)
+
+[node name="HurtBox" parent="." instance=ExtResource("3_ncr07")]
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("CircleShape2D_4erq4")
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource("4_nnvn5")]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0.968627)
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_0mxp6")
+
+[node name="HitBox" parent="." instance=ExtResource("5_0cflx")]
+scale = Vector2(0.6, 0.6)
+collision_layer = 4
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("CircleShape2D_t33c6")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+
+[editable path="HurtBox"]
+[editable path="PlayerDetectionZone"]
+[editable path="HitBox"]

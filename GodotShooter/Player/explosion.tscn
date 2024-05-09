@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://lv601bjwvkos"]
+
+[ext_resource type="Texture2D" uid="uid://bdc2kkrfcrwxq" path="res://Player/explode.png" id="1_gwfxc"]
+[ext_resource type="Script" path="res://Player/explosion.gd" id="2_v64oy"]
+[ext_resource type="PackedScene" uid="uid://dyrguhw8esoiu" path="res://Hurt and HitBoxes/HitBox.tscn" id="3_3s30x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e70vj"]
+atlas = ExtResource("1_gwfxc")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lp33f"]
+atlas = ExtResource("1_gwfxc")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2aok2"]
+atlas = ExtResource("1_gwfxc")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rscy4"]
+atlas = ExtResource("1_gwfxc")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14l70"]
+atlas = ExtResource("1_gwfxc")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2r24u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e70vj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lp33f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2aok2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rscy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14l70")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lmofi"]
+radius = 157.0
+
+[node name="Explosion" type="AnimatedSprite2D"]
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_2r24u")
+animation = &"explode"
+frame = 1
+frame_progress = 0.445432
+script = ExtResource("2_v64oy")
+
+[node name="HitBox" parent="." instance=ExtResource("3_3s30x")]
+scale = Vector2(0.6, 0.6)
+collision_layer = 8
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+rotation = 1.5708
+scale = Vector2(0.12, 0.12)
+shape = SubResource("CircleShape2D_lmofi")
+
+[editable path="HitBox"]

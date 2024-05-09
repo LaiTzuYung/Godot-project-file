@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://cdvuf1qkhx8dh"]
+
+[ext_resource type="Texture2D" uid="uid://cumgnqx5dugej" path="res://Enemies/BulletEffect.png" id="1_rqw8f"]
+[ext_resource type="Script" path="res://Effects/BulletDeathEffect.gd" id="2_nxmbn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfmg7"]
+atlas = ExtResource("1_rqw8f")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtpfr"]
+atlas = ExtResource("1_rqw8f")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xssl"]
+atlas = ExtResource("1_rqw8f")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqqfo"]
+atlas = ExtResource("1_rqw8f")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lun7"]
+atlas = ExtResource("1_rqw8f")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xt8pc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfmg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtpfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xssl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqqfo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lun7")
+}],
+"loop": false,
+"name": &"Animate",
+"speed": 15.0
+}]
+
+[node name="BulletDead" type="AnimatedSprite2D"]
+position = Vector2(-2, 0)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_xt8pc")
+animation = &"Animate"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("2_nxmbn")

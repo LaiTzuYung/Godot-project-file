@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://c22bbw3losd3"]
+
+[ext_resource type="Texture2D" uid="uid://dhs0a0yrxkrpr" path="res://Effects/TurretSpawn.png" id="1_ofxtn"]
+[ext_resource type="Script" path="res://Effects/turret_spawn.gd" id="2_qedjm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6opr"]
+atlas = ExtResource("1_ofxtn")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elfqf"]
+atlas = ExtResource("1_ofxtn")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwc7x"]
+atlas = ExtResource("1_ofxtn")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bdoe"]
+atlas = ExtResource("1_ofxtn")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32g1f"]
+atlas = ExtResource("1_ofxtn")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nbk5k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6opr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elfqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwc7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bdoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32g1f")
+}],
+"loop": false,
+"name": &"Spawn",
+"speed": 1.2
+}]
+
+[node name="TurretSpawn" type="AnimatedSprite2D"]
+position = Vector2(-21, -9)
+scale = Vector2(2.3, 2.3)
+sprite_frames = SubResource("SpriteFrames_nbk5k")
+animation = &"Spawn"
+script = ExtResource("2_qedjm")

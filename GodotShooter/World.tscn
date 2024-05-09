@@ -1,0 +1,141 @@
+[gd_scene load_steps=15 format=3 uid="uid://ear0tth3tceu"]
+
+[ext_resource type="PackedScene" uid="uid://dkqxqrrhrw57y" path="res://Player/Player.tscn" id="1_kx8eb"]
+[ext_resource type="Script" path="res://World.gd" id="1_of0yp"]
+[ext_resource type="PackedScene" uid="uid://bp73ffy6r8wd2" path="res://Enemies/Spike.tscn" id="2_fvnm0"]
+[ext_resource type="PackedScene" uid="uid://bg616h062n1vu" path="res://Enemies/Track.tscn" id="3_08vr2"]
+[ext_resource type="PackedScene" uid="uid://cb25gygo8idgt" path="res://Enemies/turret.tscn" id="4_wa4m4"]
+[ext_resource type="PackedScene" uid="uid://c22bbw3losd3" path="res://Effects/turret_spawn.tscn" id="5_60g3p"]
+[ext_resource type="Script" path="res://UI/HUD.gd" id="5_wcjhr"]
+[ext_resource type="PackedScene" uid="uid://bvuf7nuqw6j81" path="res://cloud.tscn" id="6_qt0sn"]
+[ext_resource type="AudioStream" uid="uid://b5mdg156e1p1l" path="res://Music and Sounds/Menu Select.wav" id="7_54vtj"]
+[ext_resource type="AudioStream" uid="uid://ba7ydau1ai7v" path="res://Music and Sounds/Music.mp3" id="7_u87oj"]
+[ext_resource type="AudioStream" uid="uid://03ki8omb3xtq" path="res://Music and Sounds/Winning.mp3" id="9_31qno"]
+
+[sub_resource type="Curve2D" id="Curve2D_nimis"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 796.174, -8, 0, 0, 0, 0, 796.174, 808, 0, 0, 0, 0, 396.438, 818.135, 0, 0, 0, 0, -8, 808, 0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[sub_resource type="InputEventAction" id="InputEventAction_4x7r3"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="Shortcut_hl70v"]
+events = [SubResource("InputEventAction_4x7r3")]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_of0yp")
+spike_scene = ExtResource("2_fvnm0")
+track_scene = ExtResource("3_08vr2")
+turret_scene = ExtResource("4_wa4m4")
+circle_scene = ExtResource("5_60g3p")
+cloud_scene = ExtResource("6_qt0sn")
+
+[node name="ysort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" parent="ysort" instance=ExtResource("1_kx8eb")]
+position = Vector2(152, 152)
+
+[node name="Sky" type="ColorRect" parent="."]
+offset_right = 548.0
+offset_bottom = 547.0
+color = Color(0, 0.596078, 0.858824, 1)
+
+[node name="SpikeTimer" type="Timer" parent="."]
+wait_time = 0.9
+
+[node name="TrackTimer" type="Timer" parent="."]
+wait_time = 1.8
+
+[node name="TurretTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="CloudTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(200, 200)
+
+[node name="SpikePath" type="Path2D" parent="."]
+position = Vector2(-4.3391, -4.39216)
+scale = Vector2(0.457612, 0.45098)
+curve = SubResource("Curve2D_nimis")
+
+[node name="SpikeSpawn" type="PathFollow2D" parent="SpikePath"]
+rotation = -0.0100477
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("5_wcjhr")
+
+[node name="Timer" type="Timer" parent="HUD"]
+wait_time = 1.2
+
+[node name="TimeLabel" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.489
+anchor_top = 0.089
+anchor_right = 0.489
+anchor_bottom = 0.089
+offset_left = -59.04
+offset_top = -43.04
+offset_right = -19.04
+offset_bottom = -20.04
+grow_horizontal = 2
+scale = Vector2(3, 3)
+text = "90
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.492
+anchor_right = 0.5
+anchor_bottom = 0.492
+offset_left = -132.0
+offset_top = -46.12
+offset_right = -67.0
+offset_bottom = -23.12
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.751
+anchor_right = 0.5
+anchor_bottom = 0.751
+offset_left = -84.0
+offset_top = -50.36
+offset_right = -28.0
+offset_bottom = -19.36
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+shortcut = SubResource("Shortcut_hl70v")
+text = "START"
+
+[node name="Music" type="AudioStreamPlayer" parent="HUD"]
+stream = ExtResource("7_u87oj")
+volume_db = -12.0
+
+[node name="Hero" type="AudioStreamPlayer" parent="HUD"]
+stream = ExtResource("9_31qno")
+volume_db = -10.0
+
+[node name="Start" type="AudioStreamPlayer" parent="HUD"]
+stream = ExtResource("7_54vtj")
+volume_db = -5.0
+
+[connection signal="dead" from="ysort/Player" to="." method="game_over"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="win_game" from="HUD" to="." method="game_win"]
